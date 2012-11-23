@@ -97,6 +97,12 @@ module KnifePlugins
         :short => '-H HOSTNAME',
         :long => '--hostname HOSTNAME',
         :description => 'Hostname to be set as hostname on vagrant box when provisioned'
+        
+        
+      option :box,
+        :short => '-B BOX',
+        :long => '--box BOX',
+        :description => 'Name of pre-packaged vbox template.'
 
       option :box_url,
         :short => '-U URL',
@@ -130,7 +136,7 @@ module KnifePlugins
         file = <<-EOF
           Vagrant::Config.run do |config|
             #{build_port_forwards(config[:port_forward])}
-            config.vm.box = "#{config[:hostname]}"
+            config.vm.box = "#{config[:box]}"
             config.vm.host_name = "#{config[:hostname]}"
             config.vm.customize [ "modifyvm", :id, "--memory", #{config[:memsize]} ]
             config.vm.customize [ "modifyvm", :id, "--name", "#{config[:hostname]}" ]
